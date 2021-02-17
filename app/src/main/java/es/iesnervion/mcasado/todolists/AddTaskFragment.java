@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -19,7 +20,7 @@ import com.google.android.material.timepicker.TimeFormat;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddTaskFragment extends Fragment {
+public class AddTaskFragment extends Fragment{
 
 
     final String datepickerFragmentTag = "datepicker_fragment";
@@ -34,6 +35,7 @@ public class AddTaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO Retrieve ViewModel
 
     }
 
@@ -43,6 +45,7 @@ public class AddTaskFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_add_task, container, false);
+
 
         //Datepicker
         MaterialDatePicker materialDatePicker;
@@ -69,7 +72,8 @@ public class AddTaskFragment extends Fragment {
                     materialTimePicker.show(getParentFragmentManager(), timepickerFragmentTag);
                     materialTimePicker.addOnPositiveButtonClickListener(
                             view1 -> {
-                                int hour,min;
+                                int hour;
+                                int min;
                                 String strHour, strMin;
                                 hour = materialTimePicker.getHour();
                                 min = materialTimePicker.getMinute();
@@ -88,6 +92,20 @@ public class AddTaskFragment extends Fragment {
                             } );
                 });
 
+
+        //Cancel button
+        Button btnCancel;
+        btnCancel = v.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(view -> getActivity().finish());
+
+        //Save button
+        Button btnSave = v.findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(
+                view -> {
+                    //TODO Implement saving task functionality
+               });
+
         return v;
     }
+
 }
