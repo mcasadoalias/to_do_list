@@ -1,5 +1,6 @@
 package es.iesnervion.mcasado.todolists;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,8 @@ import com.google.android.material.timepicker.TimeFormat;
 public class AddTaskFragment extends Fragment {
 
 
+    final String datepickerFragmentTag = "datepicker_fragment";
+    final String timepickerFragmentTag = "timepicker_fragment";
     private TextInputEditText txtDueDate;
     private TextInputEditText txtDueTime;
     public AddTaskFragment() {
@@ -34,40 +37,56 @@ public class AddTaskFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-//        Spinner spPriority;
-//        ArrayAdapter<String> adapter = new ArrayAdapter (requireContext(), android.R.layout.simple_spinner_item,  getResources().getStringArray(R.array.arrPriorities));
-
         View v = inflater.inflate(R.layout.fragment_add_task, container, false);
-//        spPriority = v.findViewById(R.id.spnPriority);
-//        spPriority.setAdapter(adapter);
 
         //Datepicker
+        MaterialDatePicker materialDatePicker;
         MaterialDatePicker.Builder dateBuilder = MaterialDatePicker.Builder.datePicker();
         dateBuilder.setTitleText(R.string.date_picker_title);
-        MaterialDatePicker materialDatePicker = dateBuilder.build();
-
+        materialDatePicker = dateBuilder.build();
         txtDueDate = v.findViewById(R.id.txtDueDateEdit);
-        //TODO Change fragment_tag for date picker
-        txtDueDate.setOnClickListener(view -> materialDatePicker.show(getParentFragmentManager(),"fragment_tagggggggggggg"));
+        txtDueDate.setOnClickListener(view -> materialDatePicker.show(getParentFragmentManager(),
+                                                                        datepickerFragmentTag));
+        materialDatePicker.addOnPositiveButtonClickListener(
+                selection -> txtDueDate.setText(materialDatePicker.getHeaderText()));
 
-        materialDatePicker.addOnPositiveButtonClickListener(selection -> txtDueDate.setText(materialDatePicker.getHeaderText()));
+        //TODO assign date to a variable in viewmodel
 
         //Timepicker
         txtDueTime = v.findViewById(R.id.txtDueTimeEdit);
-        MaterialTimePicker timepicker = new MaterialTimePicker.Builder()
-                                                                .setTimeFormat(TimeFormat.CLOCK_24H)
-                                                                .setTitleText(R.string.time_picker_title)
-                                                                .build();
-        //TODO Change fragment_tag for time picker
-        txtDueTime.setOnClickListener(view -> timepicker.show(getParentFragmentManager(), "fragment_tag"));
+        txtDueTime.setOnClickListener(
+                view -> {
+                    MaterialTimePicker.Builder timePickerBuilder= new MaterialTimePicker.Builder()
+                            .setTimeFormat(TimeFormat.CLOCK_24H)
+                            .setTitleText(R.string.time_picker_title)
+                            .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK);
+                    MaterialTimePicker materialTimePicker = timePickerBuilder.build();
+                    materialTimePicker.show(getParentFragmentManager(), timepickerFragmentTag);
+                    materialTimePicker.addOnPositiveButtonClickListener(
+                            view1 -> {
+                                int hour,min;
+                                String strHour, strMin;
+                                hour = materialTimePicker.getHour();
+                                min = materialTimePicker.getMinute();
+                                strHour = Integer.toString(hour);
+                                if (strHour.length()==1){
+                                    strHour = "0"+strHour;
+                                }
+                                strMin = Integer.toString(min);
+                                if (strMin.length()==1){
+                                    strMin = "0"+strMin;
+                                }
 
+                                txtDueTime.setText( strHour + ":" + strMin);
 
-        //TODO fix timepicker: it doesn't show the clock the second time you tap on the inputtext
+                                //TODO assign time to a variable in viewmodel
+                            } );
+                });
 
         return v;
     }
