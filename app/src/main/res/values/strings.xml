@@ -16,5 +16,6 @@
     <string name="cancel">CANCEL</string>
     <string name="save">SAVE</string>
     <string name="required">*Required</string>
+    <string name="time_string">%1$s : %2$s</string>
 
 </resources>
