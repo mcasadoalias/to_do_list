@@ -19,8 +19,11 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAccessor;
 
 import es.iesnervion.mcasado.todolists.DB.Priority;
 import es.iesnervion.mcasado.todolists.DB.Task;
@@ -72,6 +75,7 @@ public class AddTaskFragment extends Fragment{
      */
                 selection -> {
                     txtDueDate.setText(materialDatePicker.getHeaderText());
+                    LocalDate fff = LocalDate.parse( materialDatePicker.getHeaderText());
 
                     //TODO Remove , it's Just testing:
                     LocalDateTime fecha = PLongToLocalDateTime((Long) selection);
@@ -97,19 +101,10 @@ public class AddTaskFragment extends Fragment{
                             view1 -> {
                                 int hour;
                                 int min;
-                                String strHour, strMin;
                                 hour = materialTimePicker.getHour();
                                 min = materialTimePicker.getMinute();
-                                strHour = Integer.toString(hour);
-                                if (strHour.length() == 1) {
-                                    strHour = "0" + strHour;
-                                }
-                                strMin = Integer.toString(min);
-                                if (strMin.length() == 1) {
-                                    strMin = "0" + strMin;
-                                }
-                                txtDueTime.setText(getResources().getString(R.string.time_string,
-                                        strHour, strMin));
+                                LocalTime time = LocalTime.of(hour,min);
+                                txtDueTime.setText(time.toString());
                                 //TODO assign time to a variable in viewmodel
                             });
                 });
@@ -125,8 +120,10 @@ public class AddTaskFragment extends Fragment{
         btnSave.setOnClickListener(
                 view -> {
                     //TODO Implement saving task functionality
-                    LocalDateTime date = LocalDateTime.now();
-                    Task task = new Task("Prueba","descripcion ", Priority.LOW, date);
+                    LocalDate date = LocalDate.now();
+                    LocalTime time = LocalTime.now();
+                    Task task = new Task("Prueba","descripcion ", Priority.LOW,
+                                          date, time);
                     TodoDB.getTodoDB(getContext()).taskDAO().insertTask(task);
 
                });

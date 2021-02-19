@@ -3,27 +3,29 @@ package es.iesnervion.mcasado.todolists.DB;
 import androidx.room.TypeConverter;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public class Converters {
-    @TypeConverter
+
+    //Not needed for now...
+/*    @TypeConverter
     public static LocalDateTime LongToLocalDateTime (Long value){
-        //TODO Change now for proper conversion
         return value == null ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(value),ZoneId.systemDefault());
     }
 
     @TypeConverter
     public static Long LocalDateTimeToLong (LocalDateTime dateTime){
-        Long value = 3475345L;
-        //TODO Check conversion
+        Long value;
         value = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         return value;
-    }
+    }*/
 
     @TypeConverter
-    public static int PriorityToInt (Priority priority){
+    public static int fromPriority (Priority priority){
         int value;
         switch (priority){
             case HIGH:
@@ -44,7 +46,7 @@ public class Converters {
     }
 
     @TypeConverter
-    public static Priority IntToPriority (int value){
+    public static Priority fromInt (int value){
         Priority priority;
         switch (value){
             case 2:
@@ -62,6 +64,34 @@ public class Converters {
                 break;
         }
         return priority;
+    }
+
+    @TypeConverter
+    public static LocalDate LocalDatefromLong (long value){
+        LocalDate date;
+        date = Instant.ofEpochMilli(value).atZone(ZoneId.systemDefault()).toLocalDate();
+        return date;
+    }
+
+    @TypeConverter
+    public static long LongFromLocalDate (LocalDate date){
+        long value;
+        value = date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+        return value;
+    }
+
+    @TypeConverter
+    public static LocalTime LocalTimefromString (String stringTime){
+        LocalTime time;
+        time = LocalTime.parse(stringTime);
+        return time;
+    }
+
+    @TypeConverter
+    public static String StringFromLocalTime (LocalTime time){
+        String stringTime;
+        stringTime = time.toString();
+        return stringTime;
     }
 
 }

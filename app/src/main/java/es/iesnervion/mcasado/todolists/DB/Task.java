@@ -3,24 +3,27 @@ package es.iesnervion.mcasado.todolists.DB;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 public class Task {
 
-    //TODO Maybe it's better to store date and time separately. It depends on how you set reminders
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
     private String description;
     private Priority priority;
-    private LocalDateTime dateTime;
+    private LocalDate date;
+    private LocalTime time;
 
-    public Task(String title, String description, Priority priority, LocalDateTime dateTime) {
+    public Task(String title, String description, Priority priority, LocalDate date, LocalTime time)
+    {
         this.title = title;
         this.description = description;
         this.priority = priority;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
     }
 
     public int getId() {
@@ -55,11 +58,19 @@ public class Task {
         this.priority = priority;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }
