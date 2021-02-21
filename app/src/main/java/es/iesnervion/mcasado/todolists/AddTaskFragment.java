@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioGroup;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
@@ -44,7 +45,7 @@ public class AddTaskFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()) .get(TodoViewModel.class);
-
+        viewModel.clearTaskData ();
     }
 
 
@@ -67,6 +68,51 @@ public class AddTaskFragment extends Fragment{
             }
         });
 
+        //Description
+        TextInputEditText etxDesc = v.findViewById(R.id.etxDescription);
+        etxDesc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.saveDescription(editable.toString());
+            }
+        });
+
+        //Priority
+        RadioGroup rgPriority = v.findViewById(R.id.rgPriority);
+        rgPriority.setOnCheckedChangeListener(
+                (radioGroup, id) ->
+                {
+                   Priority priority = Priority.UNDEFINED;
+                   /*Resources ids will not be final from Gradle 5.0
+                   * So, it's not recommended to use them on switch cases
+                   * Android Studio throws a warning message*/
+                   /*switch (id) {
+                       case R.id.rbHigh:
+                           priority = Priority.HIGH;
+                           break;
+                       case R.id.rbNormal:
+                           priority = Priority.NORMAL;
+                           break;
+                       case R.id.rbLow:
+                           priority = Priority.LOW;
+                           break;
+                       default:
+                           break;
+                   }*/
+                   if (id == R.id.rbHigh){
+                       priority = Priority.HIGH;
+                   } else if (id == R.id.rbNormal){
+                       priority = Priority.NORMAL;
+                   } else if (id == R.id.rbLow){
+                       priority = Priority.LOW;
+                   }
+                   viewModel.savePriority(priority);
+                });
+
         //Datepicker
         MaterialDatePicker<?> materialDatePicker;
         MaterialDatePicker.Builder<?> dateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -78,8 +124,8 @@ public class AddTaskFragment extends Fragment{
         materialDatePicker.addOnPositiveButtonClickListener(
                 selection -> {
                     txtDueDate.setText(materialDatePicker.getHeaderText());
-                    //LocalDate fff = LocalDate.parse( materialDatePicker.getHeaderText());
-                    viewModel.saveDueDate(materialDatePicker.getHeaderText());
+                    //It's better to save the date in a format that doesnt depends on locale nor API
+                    viewModel.saveDueDate((Long)selection);
                 });
 
         //Timepicker
@@ -94,13 +140,11 @@ public class AddTaskFragment extends Fragment{
                     materialTimePicker.show(getParentFragmentManager(), timepickerFragmentTag);
                     materialTimePicker.addOnPositiveButtonClickListener(
                             view1 -> {
-                                int hour;
-                                int min;
-                                hour = materialTimePicker.getHour();
-                                min = materialTimePicker.getMinute();
+                                int hour= materialTimePicker.getHour();
+                                int min= materialTimePicker.getMinute();
                                 LocalTime time = LocalTime.of(hour,min);
                                 txtDueTime.setText(time.toString());
-                                //TODO Save time in the viewmodel
+                                viewModel.saveDueTime(time.toString());
                             });
                 });
 
@@ -114,12 +158,11 @@ public class AddTaskFragment extends Fragment{
         Button btnSave = v.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(
                 view -> {
-                    //TODO Implement saving task functionality
-                    LocalDate date = LocalDate.now();
-                    LocalTime time = LocalTime.now();
-                    Task task = new Task("Prueba","descripcion ", Priority.LOW,
-                                          date, time);
-                    TodoDB.getTodoDB(getContext()).taskDAO().insertTask(task);
+
+                    // TODO Warn about required fields
+                    viewModel.insertTask();
+
+
                });
 
         //TODO: Add a spinner to the form to be populated with the group (list) for the task

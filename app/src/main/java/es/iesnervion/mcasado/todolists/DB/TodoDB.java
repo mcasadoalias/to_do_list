@@ -21,8 +21,6 @@ public abstract class TodoDB extends RoomDatabase {
                 if (INSTANCE==null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                                     TodoDB.class, "todolists.db")
-                                                    //TODO Remove allowMainThreadsQueries
-                                                    .allowMainThreadQueries()
                                                     .build();
                 }
             }
