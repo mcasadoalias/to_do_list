@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.TypeConverter;
 
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAccessor;
+import java.util.Objects;
 
 import es.iesnervion.mcasado.todolists.DB.Priority;
 import es.iesnervion.mcasado.todolists.DB.Task;
@@ -34,9 +36,10 @@ import es.iesnervion.mcasado.todolists.DB.TodoDB;
  */
 public class AddTaskFragment extends Fragment{
 
+    TodoViewModel viewModel;
 
-    final String datepickerFragmentTag = "datepicker_fragment";
-    final String timepickerFragmentTag = "timepicker_fragment";
+    private final String datepickerFragmentTag = "datepicker_fragment";
+    private final String timepickerFragmentTag = "timepicker_fragment";
     private TextInputEditText txtDueDate;
     private TextInputEditText txtDueTime;
     public AddTaskFragment() {
@@ -47,7 +50,7 @@ public class AddTaskFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO Retrieve ViewModel
+        viewModel = new ViewModelProvider(requireActivity()) .get(TodoViewModel.class);
 
     }
 
@@ -58,7 +61,6 @@ public class AddTaskFragment extends Fragment{
 
         View v = inflater.inflate(R.layout.fragment_add_task, container, false);
 
-
         //Datepicker
         MaterialDatePicker<?> materialDatePicker;
         MaterialDatePicker.Builder<?> dateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -68,24 +70,11 @@ public class AddTaskFragment extends Fragment{
         txtDueDate.setOnClickListener(view -> materialDatePicker.show(getParentFragmentManager(),
                                                                         datepickerFragmentTag));
         materialDatePicker.addOnPositiveButtonClickListener(
-                /*The picker interprets all long values as milliseconds from the UTC Epoch.
-    You can use Instant.ofEpochMilli(dateSelected) and
-     LocalDateTime.ofInstant(...) otherwise Calendar.setTimeInMillis(dateSelected).
-     Attention to LocalDateTime.ofEpochSecond; it works with seconds and not milliseconds.
-     */
                 selection -> {
                     txtDueDate.setText(materialDatePicker.getHeaderText());
-                    LocalDate fff = LocalDate.parse( materialDatePicker.getHeaderText());
-
-                    //TODO Remove , it's Just testing:
-                    LocalDateTime fecha = PLongToLocalDateTime((Long) selection);
-
-                    Long valor = PLocalDateTimeToLong(fecha);
-                    int i = 0 ;
-
+                    //LocalDate fff = LocalDate.parse( materialDatePicker.getHeaderText());
+                    viewModel.saveDueDate(materialDatePicker.getHeaderText());
                 });
-
-        //TODO assign date to a variable in viewmodel
 
         //Timepicker
         txtDueTime = v.findViewById(R.id.txtDueTimeEdit);
@@ -105,15 +94,15 @@ public class AddTaskFragment extends Fragment{
                                 min = materialTimePicker.getMinute();
                                 LocalTime time = LocalTime.of(hour,min);
                                 txtDueTime.setText(time.toString());
-                                //TODO assign time to a variable in viewmodel
+                                //TODO Save time in the viewmodel
                             });
                 });
-
 
         //Cancel button
         Button btnCancel;
         btnCancel = v.findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(view -> getActivity().finish());
+        //TODO cancel button
+        //btnCancel.setOnClickListener()
 
         //Save button
         Button btnSave = v.findViewById(R.id.btnSave);
@@ -128,22 +117,8 @@ public class AddTaskFragment extends Fragment{
 
                });
 
+        //TODO: Add a spinner to the form to be populated with the group (list) for the task
+
         return v;
     }
-
-
-    // TODO: Remove, testing method
-    public static Long PLocalDateTimeToLong (LocalDateTime dateTime){
-        Long value = 3475345L;
-        //TODO Check conversion
-        value = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        return value;
-    }
-
-    // TODO: Remove, testing method
-    public static LocalDateTime PLongToLocalDateTime (Long value){
-        //TODO Change now for proper conversion
-        return value == null ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(value), ZoneId.systemDefault());
-    }
-
 }
