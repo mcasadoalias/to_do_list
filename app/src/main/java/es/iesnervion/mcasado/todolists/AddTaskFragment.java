@@ -1,31 +1,24 @@
 package es.iesnervion.mcasado.todolists;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.TypeConverter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.temporal.TemporalAccessor;
-import java.util.Objects;
 
 import es.iesnervion.mcasado.todolists.DB.Priority;
 import es.iesnervion.mcasado.todolists.DB.Task;
@@ -60,6 +53,19 @@ public class AddTaskFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_add_task, container, false);
+
+        //Title
+        TextInputEditText etxTitle = v.findViewById(R.id.etxTitle);
+        etxTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.saveTitle(editable.toString());
+            }
+        });
 
         //Datepicker
         MaterialDatePicker<?> materialDatePicker;
@@ -114,7 +120,6 @@ public class AddTaskFragment extends Fragment{
                     Task task = new Task("Prueba","descripcion ", Priority.LOW,
                                           date, time);
                     TodoDB.getTodoDB(getContext()).taskDAO().insertTask(task);
-
                });
 
         //TODO: Add a spinner to the form to be populated with the group (list) for the task

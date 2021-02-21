@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle;
 
 public class TodoViewModel extends AndroidViewModel {
     private static final String DUE_DATE_KEY = "dueDateKey";
+    private static final String TASK_TITLE_KEY = "taskTitleKey";
     private SavedStateHandle state;
     public TodoViewModel(@NonNull Application application, SavedStateHandle state) {
         super(application);
@@ -20,5 +21,13 @@ public class TodoViewModel extends AndroidViewModel {
 
     public String getDueDate (){
         return state.get(DUE_DATE_KEY);
+    }
+
+    public void saveTitle (String title){
+        state.set(TASK_TITLE_KEY,title);
+    }
+
+    public String getTitle (){
+        return state.get(TASK_TITLE_KEY);
     }
 }
