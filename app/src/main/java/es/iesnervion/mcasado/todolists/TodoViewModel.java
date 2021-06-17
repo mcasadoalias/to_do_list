@@ -6,6 +6,8 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ import es.iesnervion.mcasado.todolists.DB.TodoDB;
 
 public class TodoViewModel extends AndroidViewModel {
     private static final String DUE_DATE_KEY = "dueDateKey";
+    private static final String DUE_DATE_STRING_KEY = "dueDateStringKey";
     private static final String DUE_TIME_KEY = "dueTimeKey";
     private static final String TASK_TITLE_KEY = "taskTitleKey";
     private static final String TASK_DESCRIPTION_KEY = "TaskDescriptionKey";
@@ -28,18 +31,27 @@ public class TodoViewModel extends AndroidViewModel {
     //Handler handler = new Handler(Looper.getMainLooper());
     private final SavedStateHandle state;
     private final Application app;
+
     public TodoViewModel(@NonNull Application application, SavedStateHandle state) {
         super(application);
         this.state = state;
         this.app = application;
     }
 
+    //TODO: Change all the "get" for "getLiveData"?
+
     public void saveDueDate (Long date){
         state.set(DUE_DATE_KEY,date);
     }
 
+    public void saveDueDateAsString(String strDate) {state.set(DUE_DATE_STRING_KEY,strDate); }
+
     public Long getDueDate (){
         return state.get(DUE_DATE_KEY);
+    }
+
+    public String getDueDateAsString (){
+        return state.get(DUE_DATE_STRING_KEY);
     }
 
     public void saveDueTime (String time){
@@ -57,6 +69,8 @@ public class TodoViewModel extends AndroidViewModel {
     public String getTitle (){
         return state.get(TASK_TITLE_KEY);
     }
+
+
 
     public void saveDescription(String description) {
         state.set(TASK_DESCRIPTION_KEY, description);
@@ -98,4 +112,5 @@ public class TodoViewModel extends AndroidViewModel {
         });
 
     }
+
 }
