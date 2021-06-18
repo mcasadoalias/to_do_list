@@ -20,7 +20,7 @@ import es.iesnervion.mcasado.todolists.DB.Priority;
 import es.iesnervion.mcasado.todolists.DB.Task;
 import es.iesnervion.mcasado.todolists.DB.TodoDB;
 
-public class TodoViewModel extends AndroidViewModel {
+public class AddEditTaskViewModel extends AndroidViewModel {
     private static final String DUE_DATE_KEY = "dueDateKey";
     private static final String DUE_DATE_STRING_KEY = "dueDateStringKey";
     private static final String DUE_TIME_KEY = "dueTimeKey";
@@ -32,7 +32,7 @@ public class TodoViewModel extends AndroidViewModel {
     private final SavedStateHandle state;
     private final Application app;
 
-    public TodoViewModel(@NonNull Application application, SavedStateHandle state) {
+    public AddEditTaskViewModel(@NonNull Application application, SavedStateHandle state) {
         super(application);
         this.state = state;
         this.app = application;

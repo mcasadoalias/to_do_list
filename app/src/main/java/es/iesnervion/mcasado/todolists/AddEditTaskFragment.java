@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +20,15 @@ import es.iesnervion.mcasado.todolists.DB.Priority;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddTaskFragment extends Fragment{
+public class AddEditTaskFragment extends Fragment{
 
-    TodoViewModel viewModel;
+    AddEditTaskViewModel viewModel;
 
     private final String datepickerFragmentTag = "datepicker_fragment";
     private final String timepickerFragmentTag = "timepicker_fragment";
 
 
-    public AddTaskFragment() {
+    public AddEditTaskFragment() {
         // Required empty public constructor
     }
 
@@ -37,7 +36,7 @@ public class AddTaskFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()) .get(TodoViewModel.class);
+        viewModel = new ViewModelProvider(this) .get(AddEditTaskViewModel.class);
     }
 
 
@@ -51,7 +50,7 @@ public class AddTaskFragment extends Fragment{
         TextInputEditText txtDueDate;
         TextInputEditText txtDueTime;
 
-        View v = inflater.inflate(R.layout.fragment_add_task, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_edit_task, container, false);
         etxTitle = v.findViewById(R.id.etxTitle);
         etxDesc = v.findViewById(R.id.etxDescription);
         rgPriority = v.findViewById(R.id.rgPriority);

@@ -1,5 +1,7 @@
+
 plugins {
     id 'com.android.application'
+
 }
 
 android {
@@ -41,6 +43,9 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-fragment:2.2.2'
+    implementation 'androidx.navigation:navigation-ui:2.2.2'
+
 
     // desugaring
     // needed to use java.time in APIs lower than 26
@@ -67,7 +72,20 @@ dependencies {
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
-    // appcompat
+
+
+    //Navigation component
+    def nav_version = "2.3.5"
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    //Feature module Support for Navigation Component
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    //Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    //Using plugin Safe Args for navigation component
+    apply plugin: "androidx.navigation.safeargs"
+
+    //appcompat
     def appcompat_version = "1.2.0"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     // For loading and tinting drawables on older versions of the platform
@@ -78,5 +96,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    
+
 }
