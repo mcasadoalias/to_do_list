@@ -12,9 +12,12 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import java.time.LocalTime;
+import java.util.Objects;
+
 import es.iesnervion.mcasado.todolists.DB.Priority;
 
 /**
@@ -45,13 +48,16 @@ public class AddEditTaskFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         TextInputEditText etxTitle;
+        TextInputLayout txlTitle;
         TextInputEditText etxDesc;
         RadioGroup rgPriority;
         TextInputEditText txtDueDate;
         TextInputEditText txtDueTime;
 
+
         View v = inflater.inflate(R.layout.fragment_add_edit_task, container, false);
         etxTitle = v.findViewById(R.id.etxTitle);
+        txlTitle = v.findViewById(R.id.txlTitle);
         etxDesc = v.findViewById(R.id.etxDescription);
         rgPriority = v.findViewById(R.id.rgPriority);
         txtDueDate = v.findViewById(R.id.txtDueDateEdit);
@@ -93,6 +99,7 @@ public class AddEditTaskFragment extends Fragment{
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
+                txlTitle.setError(null);
                 viewModel.saveTitle(editable.toString());
             }
         });
@@ -190,13 +197,37 @@ public class AddEditTaskFragment extends Fragment{
         btnSave.setOnClickListener(
                 view -> {
 
-                    // TODO Warn about required fields
-                    viewModel.insertTask();
+
+                    if (requiredFieldsAreEmpty()){
+                        displayErrors();
+                    } else {
+                        viewModel.insertTask();
+                        //TODO Navigate to TasksListFragment if task inserted
+                    }
+
+                    //TODO Snackbar informing about the result (task inserted or not)
+
 
 
                });
         //TODO: Add a spinner to the form to be populated with the group (list) for the task
 
         return v;
+    }
+
+    private void displayErrors() {
+        TextInputLayout txlTitle = getView().findViewById(R.id.txlTitle);
+        if (Objects.requireNonNull(txlTitle.getEditText()).getText().toString().trim().isEmpty()){
+            txlTitle.setError(getString(R.string.title_required));
+        }
+    }
+
+    private boolean requiredFieldsAreEmpty() {
+        boolean res=false;
+        TextInputEditText etxTitle = getView().findViewById(R.id.etxTitle);
+        if (Objects.requireNonNull(etxTitle.getText()).toString().trim().isEmpty()){
+            res = true;
+        }
+        return res;
     }
 }
