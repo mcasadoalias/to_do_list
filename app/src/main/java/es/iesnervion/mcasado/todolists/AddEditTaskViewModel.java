@@ -100,6 +100,7 @@ public class AddEditTaskViewModel extends AndroidViewModel {
         String title = getTitle();
         String descr = getDescription();
         Priority pri = getPriority();
+        //TODO If date field is empty, the app crashes
         LocalDate date = Converters.LocalDatefromLong(getDueDate());
         LocalTime time = LocalTime.parse(getDueTime());
         Task task = new Task(title, descr, pri , date, time);

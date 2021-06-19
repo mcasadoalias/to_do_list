@@ -3,6 +3,9 @@ package es.iesnervion.mcasado.todolists;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
@@ -189,28 +193,28 @@ public class AddEditTaskFragment extends Fragment{
         //Cancel button
         Button btnCancel;
         btnCancel = v.findViewById(R.id.btnCancel);
-        //TODO cancel button
-        //btnCancel.setOnClickListener();
+        btnCancel.setOnClickListener(view -> {
+            NavDirections action = AddEditTaskFragmentDirections
+                    .actionAddEditTaskFragmentToTasksListFragment();
+            Navigation.findNavController(view).navigate(action);
+        });
 
         //Save button
         Button btnSave = v.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(
                 view -> {
-
-
                     if (requiredFieldsAreEmpty()){
                         displayErrors();
                     } else {
                         viewModel.insertTask();
-                        //TODO Navigate to TasksListFragment if task inserted
+                        //TODO Check if the task was actually inserted
+                        Snackbar.make(btnSave, R.string.insertion_ok, Snackbar.LENGTH_SHORT).show();
+                        NavDirections action = AddEditTaskFragmentDirections
+                                .actionAddEditTaskFragmentToTasksListFragment();
+                        Navigation.findNavController(view).navigate(action);
                     }
-
-                    //TODO Snackbar informing about the result (task inserted or not)
-
-
-
                });
-        //TODO: Add a spinner to the form to be populated with the group (list) for the task
+        //TODO: Add a spinner to the form to be populated with the group (list) for the task??
 
         return v;
     }
