@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +71,14 @@ public class TasksListFragment extends Fragment {
                                     .actionTasksListFragmentToAddEditTaskFragment();
             Navigation.findNavController(view).navigate(action);
         });
+        if (getArguments()!=null){
+            boolean isTaskAdded = TasksListFragmentArgs.fromBundle(getArguments()).getAddedTask();
+            if (isTaskAdded) {
+                Snackbar.make(btnAddTask, R.string.insertion_ok, Snackbar.LENGTH_SHORT).show();
+            }
+        }
+
+
         return v;
     }
 }

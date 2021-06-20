@@ -195,7 +195,7 @@ public class AddEditTaskFragment extends Fragment{
         btnCancel = v.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(view -> {
             NavDirections action = AddEditTaskFragmentDirections
-                    .actionAddEditTaskFragmentToTasksListFragment();
+                    .actionAddEditTaskFragmentToTasksListFragment(false);
             Navigation.findNavController(view).navigate(action);
         });
 
@@ -208,9 +208,9 @@ public class AddEditTaskFragment extends Fragment{
                     } else {
                         viewModel.insertTask();
                         //TODO Check if the task was actually inserted
-                        Snackbar.make(btnSave, R.string.insertion_ok, Snackbar.LENGTH_SHORT).show();
+
                         NavDirections action = AddEditTaskFragmentDirections
-                                .actionAddEditTaskFragmentToTasksListFragment();
+                                .actionAddEditTaskFragmentToTasksListFragment(true);
                         Navigation.findNavController(view).navigate(action);
                     }
                });
