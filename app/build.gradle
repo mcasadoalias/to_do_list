@@ -72,7 +72,9 @@ dependencies {
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
-
+    //DrawerLayout
+    def drawerlayout_version = "1.1.1"
+    implementation "androidx.drawerlayout:drawerlayout:$drawerlayout_version"
 
     //Navigation component
     def nav_version = "2.3.5"
