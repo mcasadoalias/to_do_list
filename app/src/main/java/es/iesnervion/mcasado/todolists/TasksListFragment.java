@@ -77,7 +77,7 @@ public class TasksListFragment extends Fragment {
                 Snackbar.make(btnAddTask, R.string.insertion_ok, Snackbar.LENGTH_SHORT).show();
             }
         }
-        
+
         return v;
     }
 }

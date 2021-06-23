@@ -103,7 +103,8 @@ public class AddEditTaskViewModel extends AndroidViewModel {
         //TODO If date field is empty, the app crashes
         LocalDate date = Converters.LocalDatefromLong(getDueDate());
         LocalTime time = LocalTime.parse(getDueTime());
-        Task task = new Task(title, descr, pri , date, time);
+        //TODO: FOR NOW ALL TASKS ARE INSERTED IN LIST ID 1
+        Task task = new Task(title, descr, pri , date, time, 1);
         //TODO Move this to a Repository
         executor.execute(() -> {
             TodoDB.getTodoDB(app).taskDAO().insertTask(task);

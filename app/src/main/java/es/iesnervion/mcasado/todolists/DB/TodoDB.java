@@ -7,13 +7,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities={Task.class}, version=1)
+@Database(entities={Task.class, Category.class}, version=1)
 @TypeConverters({Converters.class})
 public abstract class TodoDB extends RoomDatabase {
 
     private static TodoDB INSTANCE;
 
     public abstract TaskDAO taskDAO();
+    public abstract CategoryDAO categoryDAO();
 
     public static TodoDB getTodoDB (final Context context){
         if (INSTANCE == null) {
