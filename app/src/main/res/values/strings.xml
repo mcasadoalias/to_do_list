@@ -26,6 +26,8 @@
     <!-- Open and Close strings for the navigation drawer (accessibility)-->
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="header_title">Header title</string>
+    <string name="header_text">Header text</string>
 
 
 </resources>

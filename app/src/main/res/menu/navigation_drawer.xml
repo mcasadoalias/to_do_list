@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <group
+            android:id="@+id/group1"
+            android:checkableBehavior="single">
+                <item
+                    android:id="@+id/item1"
+                    android:icon="@drawable/baseline_today_black_48"
+                    android:title="PRUEBAAAAAAAAAAAA" />
+                <item
+                    android:id="@+id/item2"
+                    android:icon="@drawable/ic_baseline_local_airport_24"
+                    app:showAsAction="always"
+                    android:title="PRUEBA 2" />
+                <item
+                    android:id="@+id/item3"
+                    android:icon="@drawable/baseline_today_24"
+                    android:title="PRUEBA 3" />
+        </group>
+</menu>

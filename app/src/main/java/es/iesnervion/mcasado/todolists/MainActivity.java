@@ -13,12 +13,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     AddEditTaskViewModel viewModel;
     private DrawerLayout drawer;
     MaterialToolbar toolbar;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +37,14 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationView = findViewById(R.id.navigationView);
+        toolbar.setNavigationOnClickListener(v -> drawer.open());
+        navigationView.setNavigationItemSelectedListener(item -> {
+            item.setChecked(true);
+            drawer.close();
+            return true;
+        });
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        boolean res = super.onOptionsItemSelected(item);
-        if (item.getItemId()==android.R.id.home){
-            drawer.openDrawer(GravityCompat.START,true);
-            res = true;
-        }
-        return res;
-    }
 }
