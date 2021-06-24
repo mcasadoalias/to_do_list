@@ -1,23 +1,21 @@
-package es.iesnervion.mcasado.todolists;
+package es.iesnervion.mcasado.todolists.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
+import es.iesnervion.mcasado.todolists.R;
+import es.iesnervion.mcasado.todolists.viewmodels.AddEditTaskVM;
+
 public class MainActivity extends AppCompatActivity {
 
-    AddEditTaskViewModel viewModel;
+    AddEditTaskVM viewModel;
     private DrawerLayout drawer;
     MaterialToolbar toolbar;
     NavigationView navigationView;

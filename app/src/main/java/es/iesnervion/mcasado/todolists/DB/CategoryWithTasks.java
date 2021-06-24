@@ -10,7 +10,7 @@ public class CategoryWithTasks {
     private Category category;
     @Relation (
             parentColumn = "id",
-            entityColumn = "listId",
+            entityColumn = "catId",
             entity = Task.class
     )
     private List<Task> tasks;

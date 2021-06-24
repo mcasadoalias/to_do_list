@@ -16,17 +16,17 @@ public class Task {
     private Priority priority;
     private LocalDate date;
     private LocalTime time;
-    private int listId;
+    private int catId;
 
     public Task(String title, String description, Priority priority, LocalDate date, LocalTime time,
-                int listId)
+                int catId)
     {
         this.title = title;
         this.description = description;
         this.priority = priority;
         this.date = date;
         this.time = time;
-        this.listId = listId;
+        this.catId = catId;
     }
 
     public int getId() {
@@ -77,11 +77,11 @@ public class Task {
         this.time = time;
     }
 
-    public int getListId() {
-        return listId;
+    public int getCatId() {
+        return catId;
     }
 
-    public void setListId(int listId) {
-        this.listId = listId;
+    public void setCatId(int catId) {
+        this.catId = catId;
     }
 }

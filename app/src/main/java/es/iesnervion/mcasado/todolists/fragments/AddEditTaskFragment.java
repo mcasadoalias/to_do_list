@@ -1,4 +1,4 @@
-package es.iesnervion.mcasado.todolists;
+package es.iesnervion.mcasado.todolists.fragments;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
@@ -22,14 +21,17 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import es.iesnervion.mcasado.todolists.WhatToShowType;
+import es.iesnervion.mcasado.todolists.viewmodels.AddEditTaskVM;
 import es.iesnervion.mcasado.todolists.DB.Priority;
+import es.iesnervion.mcasado.todolists.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddEditTaskFragment extends Fragment{
 
-    AddEditTaskViewModel viewModel;
+    AddEditTaskVM viewModel;
 
     private final String datepickerFragmentTag = "datepicker_fragment";
     private final String timepickerFragmentTag = "timepicker_fragment";
@@ -43,7 +45,7 @@ public class AddEditTaskFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this) .get(AddEditTaskViewModel.class);
+        viewModel = new ViewModelProvider(this) .get(AddEditTaskVM.class);
     }
 
 
@@ -194,8 +196,10 @@ public class AddEditTaskFragment extends Fragment{
         Button btnCancel;
         btnCancel = v.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(view -> {
+            //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
             NavDirections action = AddEditTaskFragmentDirections
-                    .actionAddEditTaskFragmentToTasksListFragment(false);
+                    .actionAddEditTaskFragmentToTasksListFragment(false,
+                                                                    WhatToShowType.CAT,1);
             Navigation.findNavController(view).navigate(action);
         });
 
@@ -203,18 +207,20 @@ public class AddEditTaskFragment extends Fragment{
         Button btnSave = v.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(
                 view -> {
-                    if (requiredFieldsAreEmpty()){
+                    if (areRequiredFieldsEmpty()){
                         displayErrors();
                     } else {
                         viewModel.insertTask();
                         //TODO Check if the task was actually inserted
 
+                        //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
                         NavDirections action = AddEditTaskFragmentDirections
-                                .actionAddEditTaskFragmentToTasksListFragment(true);
+                                .actionAddEditTaskFragmentToTasksListFragment(true,
+                                                                    WhatToShowType.CAT,1);
                         Navigation.findNavController(view).navigate(action);
                     }
                });
-        //TODO: Add a spinner to the form to be populated with the group (list) for the task??
+        //TODO: Add a spinner to the form to be populated with the category for the task??
 
         return v;
     }
@@ -226,7 +232,7 @@ public class AddEditTaskFragment extends Fragment{
         }
     }
 
-    private boolean requiredFieldsAreEmpty() {
+    private boolean areRequiredFieldsEmpty() {
         boolean res=false;
         TextInputEditText etxTitle = getView().findViewById(R.id.etxTitle);
         if (Objects.requireNonNull(etxTitle.getText()).toString().trim().isEmpty()){

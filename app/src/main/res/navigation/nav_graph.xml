@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/tasksListFragment"
-        android:name="es.iesnervion.mcasado.todolists.TasksListFragment"
+        android:name="es.iesnervion.mcasado.todolists.fragments.TasksListFragment"
         android:label="fragment_tasks_list"
         tools:layout="@layout/fragment_tasks_list" >
         <action
@@ -19,13 +19,21 @@
         <argument
             android:name="addedTask"
             app:argType="boolean"
-            android:defaultValue="false"
-            />
+            android:defaultValue="false" />
+        <!-- TODO: Change those two parameters for an WhatToShow object? -->
+        <argument
+            android:name="whatToShowType"
+            app:argType="es.iesnervion.mcasado.todolists.WhatToShowType"
+            android:defaultValue="ALL" />
+        <argument
+            android:name="catId"
+            app:argType="integer"
+            android:defaultValue="-1" />
 
     </fragment>
     <fragment
         android:id="@+id/addEditTaskFragment"
-        android:name="es.iesnervion.mcasado.todolists.AddEditTaskFragment"
+        android:name="es.iesnervion.mcasado.todolists.fragments.AddEditTaskFragment"
         android:label="fragment_add_edit_task"
         tools:layout="@layout/fragment_add_edit_task" >
         <action
@@ -36,6 +44,12 @@
             <argument
                 android:name="addedTask"
                 app:argType="boolean" />
+            <argument
+                android:name="whatToShowType"
+                app:argType="es.iesnervion.mcasado.todolists.WhatToShowType" />
+            <argument
+                android:name="catId"
+                app:argType="integer" />
         </action>
     </fragment>
 </navigation>

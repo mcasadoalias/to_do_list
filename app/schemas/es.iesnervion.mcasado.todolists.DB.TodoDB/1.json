@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2ac7a0051a6c4c32c2ac3077c9f19e80",
+    "identityHash": "bce242a2a567502d7a4f0cbc3f4e15f1",
     "entities": [
       {
         "tableName": "Task",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `description` TEXT, `priority` INTEGER, `date` INTEGER, `time` TEXT, `listId` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `description` TEXT, `priority` INTEGER, `date` INTEGER, `time` TEXT, `catId` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -45,8 +45,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "listId",
-            "columnName": "listId",
+            "fieldPath": "catId",
+            "columnName": "catId",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -90,7 +90,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2ac7a0051a6c4c32c2ac3077c9f19e80')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bce242a2a567502d7a4f0cbc3f4e15f1')"
     ]
   }
 }

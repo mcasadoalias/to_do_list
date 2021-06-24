@@ -1,4 +1,4 @@
-package es.iesnervion.mcasado.todolists;
+package es.iesnervion.mcasado.todolists.viewmodels;
 
 import android.app.Application;
 import android.os.Handler;
@@ -20,7 +20,13 @@ import es.iesnervion.mcasado.todolists.DB.Priority;
 import es.iesnervion.mcasado.todolists.DB.Task;
 import es.iesnervion.mcasado.todolists.DB.TodoDB;
 
-public class AddEditTaskViewModel extends AndroidViewModel {
+/**
+ * ViewModel for AddEditTaskFragment
+ * We will not use a single ViewModel shared with all fragments and the activity because we will
+ * apply the principle of separation of concerns.
+ *
+ */
+public class AddEditTaskVM extends AndroidViewModel {
     private static final String DUE_DATE_KEY = "dueDateKey";
     private static final String DUE_DATE_STRING_KEY = "dueDateStringKey";
     private static final String DUE_TIME_KEY = "dueTimeKey";
@@ -32,7 +38,7 @@ public class AddEditTaskViewModel extends AndroidViewModel {
     private final SavedStateHandle state;
     private final Application app;
 
-    public AddEditTaskViewModel(@NonNull Application application, SavedStateHandle state) {
+    public AddEditTaskVM(@NonNull Application application, SavedStateHandle state) {
         super(application);
         this.state = state;
         this.app = application;
@@ -103,7 +109,7 @@ public class AddEditTaskViewModel extends AndroidViewModel {
         //TODO If date field is empty, the app crashes
         LocalDate date = Converters.LocalDatefromLong(getDueDate());
         LocalTime time = LocalTime.parse(getDueTime());
-        //TODO: FOR NOW ALL TASKS ARE INSERTED IN LIST ID 1
+        //TODO: FOR NOW ALL TASKS ARE INSERTED IN LIST ID 1: CHANGE IT!!
         Task task = new Task(title, descr, pri , date, time, 1);
         //TODO Move this to a Repository
         executor.execute(() -> {
