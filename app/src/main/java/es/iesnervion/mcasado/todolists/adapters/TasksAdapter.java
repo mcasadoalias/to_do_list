@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,13 +50,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         if (tasks!=null){
-            holder.getCbTitle().setText(tasks.get(position).getTitle());
-            holder.getTxvDescrip().setText(tasks.get(position).getDescription());
-            LocalDate date = tasks.get(position).getDate();
+            Task task = tasks.get(position);
+            holder.getCbTitle().setText(task.getTitle());
+            holder.getCbTitle().setChecked(task.isCompleted());
+            holder.getTxvDescrip().setText(task.getDescription());
+            LocalDate date = task.getDate();
             DateTimeFormatter format = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
             holder.getTxvDate().setText(date.format(format));
-
-            holder.getTxvTime().setText(tasks.get(position).getTime().toString());
+            holder.getTxvTime().setText(task.getTime().toString());
+            holder.getTgFav().setChecked(task.isFav());
         }
     }
 
@@ -77,6 +80,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         private final TextView txvDescrip;
         private final TextView txvDate;
         private final TextView txvTime;
+        private final ToggleButton tgFav;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -85,6 +89,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             this.txvDescrip = itemView.findViewById(R.id.txvDescrip);
             this.txvDate = itemView.findViewById(R.id.txvDate);
             this.txvTime = itemView.findViewById(R.id.txvTime);
+            this.tgFav = itemView.findViewById(R.id.tgFav);
 
         }
 
@@ -102,6 +107,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         public TextView getTxvTime() {
             return txvTime;
+        }
+
+        public ToggleButton getTgFav() {
+            return tgFav;
         }
     }
 }

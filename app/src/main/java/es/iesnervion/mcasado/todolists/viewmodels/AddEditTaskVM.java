@@ -1,13 +1,9 @@
 package es.iesnervion.mcasado.todolists.viewmodels;
 
 import android.app.Application;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
 import java.time.LocalDate;
@@ -110,7 +106,7 @@ public class AddEditTaskVM extends AndroidViewModel {
         LocalDate date = Converters.LocalDatefromLong(getDueDate());
         LocalTime time = LocalTime.parse(getDueTime());
         //TODO: FOR NOW ALL TASKS ARE INSERTED IN LIST ID 1: CHANGE IT!!
-        Task task = new Task(title, descr, pri , date, time, 2);
+        Task task = new Task(title, descr, pri , date, time, 2, false, false);
         //TODO Move this to a Repository
         executor.execute(() -> {
             TodoDB.getTodoDB(app).taskDAO().insertTask(task);
