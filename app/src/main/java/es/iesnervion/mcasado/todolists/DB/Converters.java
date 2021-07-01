@@ -76,7 +76,7 @@ public class Converters {
     @TypeConverter
     public static long LongFromLocalDate (LocalDate date){
         long value;
-        value = date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+        value = date.atStartOfDay(ZoneId.systemDefault()).toEpochSecond()*1000L;
         return value;
     }
 

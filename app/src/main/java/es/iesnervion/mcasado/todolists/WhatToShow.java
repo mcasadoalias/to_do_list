@@ -9,8 +9,8 @@ import java.io.Serializable;
  * This class will be used to determine what tasks to show depending on the values of its fields
  * catID only has to be taken into account in case that whatToShowType is set to WhatToShowType.CAT
  */
-//TODO Do it parcelable instead of Serializable
-public class WhatToShow implements Serializable { //Parcelable {
+
+public class WhatToShow implements Parcelable {
 
     public static final int NO_CAT = -1;
 
@@ -49,17 +49,17 @@ public class WhatToShow implements Serializable { //Parcelable {
     public void setWhatToShowType(WhatToShowType whatToShowType) {
         this.whatToShowType = whatToShowType;
     }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(whatToShowType.name());
-//        dest.writeInt(catId);
-//    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(whatToShowType.name());
+        dest.writeInt(catId);
+    }
 
     public int getCatId() {
         return catId;

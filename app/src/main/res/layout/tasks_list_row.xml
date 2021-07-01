@@ -1,13 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvtitle"/>
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.App.Headline6"
+            android:id="@+id/cbTaskTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/txvDescrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:lines="2"
+            android:textAppearance="@style/TextAppearance.App.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cbTaskTitle" />
+
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/tgFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txvDescrip" />
+
+        <TextView
+            android:id="@+id/txvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:drawableStartCompat="@drawable/baseline_access_alarm_24"
+            app:drawableTint="@color/design_default_color_secondary_variant"
+            app:layout_constraintEnd_toStartOf="@id/tgFav"
+            app:layout_constraintTop_toBottomOf="@id/txvDescrip" />
+
+        <TextView
+            android:id="@+id/txvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:drawableStartCompat="@drawable/baseline_today_black_24"
+            app:drawableTint="@color/design_default_color_secondary_variant"
+            app:layout_constraintEnd_toStartOf="@id/txvTime"
+            app:layout_constraintTop_toBottomOf="@id/txvDescrip" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </com.google.android.material.card.MaterialCardView>

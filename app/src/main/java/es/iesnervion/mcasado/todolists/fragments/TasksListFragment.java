@@ -48,8 +48,8 @@ public class TasksListFragment extends Fragment {
         viewModel.getTasks().observe(this, new Observer<List<Task>>() {
                     @Override
                     public void onChanged(List<Task> tasks) {
-                        //TODO: Use NotifyDatasetChanged instead
-                        TasksListFragment.this.recycler.setAdapter(new TasksAdapter(tasks));
+                       ((TasksAdapter)TasksListFragment.this.recycler.getAdapter()).setTasks(tasks);
+                       TasksListFragment.this.recycler.getAdapter().notifyDataSetChanged();
                     }
                 });
     }
