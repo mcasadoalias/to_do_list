@@ -110,7 +110,7 @@ public class AddEditTaskVM extends AndroidViewModel {
         LocalDate date = Converters.LocalDatefromLong(getDueDate());
         LocalTime time = LocalTime.parse(getDueTime());
         //TODO: FOR NOW ALL TASKS ARE INSERTED IN LIST ID 1: CHANGE IT!!
-        Task task = new Task(title, descr, pri , date, time, 1);
+        Task task = new Task(title, descr, pri , date, time, 2);
         //TODO Move this to a Repository
         executor.execute(() -> {
             TodoDB.getTodoDB(app).taskDAO().insertTask(task);

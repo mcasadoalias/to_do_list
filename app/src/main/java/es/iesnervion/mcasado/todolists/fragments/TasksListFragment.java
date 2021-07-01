@@ -34,7 +34,7 @@ public class TasksListFragment extends Fragment {
 
     private RecyclerView recycler;
     private TasksListVM viewModel;
-    //TODO Put this fields in the VM
+    //TODO Put this field in the VM
     private int catId;
 
     public TasksListFragment() {
@@ -48,6 +48,7 @@ public class TasksListFragment extends Fragment {
         viewModel.getTasks().observe(this, new Observer<List<Task>>() {
                     @Override
                     public void onChanged(List<Task> tasks) {
+                        //TODO: Use NotifyDatasetChanged instead
                         TasksListFragment.this.recycler.setAdapter(new TasksAdapter(tasks));
                     }
                 });
@@ -70,30 +71,27 @@ public class TasksListFragment extends Fragment {
                 Snackbar.make(btnAddTask,R.string.insertion_ok, Snackbar.LENGTH_SHORT).show();
             }
 
-            WhatToShowType whatToShowType = TasksListFragmentArgs.fromBundle(getArguments())
-                                                                            .getWhatToShowType();
-            switch (whatToShowType){
-                case ALL:
-                    break;
-                case FAV:
-                    break;
-                case HIGH:
-                case LOW:
-                    break;
-                case CAT:
-                    catId = TasksListFragmentArgs.fromBundle(getArguments()).getCatId();
-                    viewModel.setWhatToShowMutable(new WhatToShow(WhatToShowType.CAT,1));
-                    break;
+            WhatToShow whatToShow = TasksListFragmentArgs.fromBundle(getArguments())
+                                                                            .getWhatToShow();
+            if (whatToShow!=null) {
+                switch (whatToShow.getWhatToShowType()) {
+                    case ALL:
+                        break;
+                    case FAV:
+                        break;
+                    case HIGH:
+                    case LOW:
+                        break;
+                    case CAT:
+                        catId = TasksListFragmentArgs.fromBundle(getArguments())
+                                .getWhatToShow().getCatId();
+                        viewModel.setWhatToShowMutable(new WhatToShow(WhatToShowType.CAT, catId));
+                        break;
+                }
             }
         }
 
-        Button btn1 = v.findViewById(R.id.btn1);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.insertTask();
-            }
-        });
+
         recycler = v.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext(),
                                                         RecyclerView.VERTICAL,false));
@@ -102,6 +100,4 @@ public class TasksListFragment extends Fragment {
 
         return v;
     }
-
-
 }

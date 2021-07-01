@@ -47,29 +47,11 @@ public class TasksListVM extends AndroidViewModel {
         this.repo = new Repository(TodoDB.getTodoDB(app).categoryDAO(),
                                     TodoDB.getTodoDB(app).taskDAO());
         this.whatToShowMutable = new MutableLiveData<>();
-        //TODO WhatToShow HARDCODED: REMOVE!!!
-        this.whatToShowMutable.setValue(new WhatToShow(WhatToShowType.CAT,7));
-        this.tasks = getTasksByWhatToShow (this.whatToShowMutable);
-    }
 
-    private LiveData<List<Task>> getTasksByWhatToShow(
-                            @NonNull @NotNull MutableLiveData<WhatToShow> whatToShowMutable) {
-        LiveData<List<Task>> tasks = null;
-        switch (whatToShowMutable.getValue().getWhatToShowType()) {
-            case ALL:
-
-                break;
-            case FAV:
-                break;
-            case HIGH:
-            case LOW:
-                break;
-            case CAT:
-                tasks = Transformations.switchMap(whatToShowMutable, param ->
-                        repo.tasksByCat(param.getCatId()));
-                break;
-        }
-        return tasks;
+        this.whatToShowMutable.setValue(new WhatToShow());
+        this.tasks = Transformations.switchMap(whatToShowMutable, param ->
+                repo.getTasksByWhatToShow (this.whatToShowMutable.getValue().getWhatToShowType(),
+                                           this.whatToShowMutable.getValue().getCatId()));
     }
 
     public MutableLiveData<WhatToShow> getWhatToShowMutable() {
@@ -83,27 +65,6 @@ public class TasksListVM extends AndroidViewModel {
     public LiveData<List<Task>> getTasks() {
         return tasks;
     }
-
-    //TODO: Remove this. Just testing.
-    public void insertTask() {
-        String title = "PRUE";
-        String descr = "a ver...";
-        Priority pri = Priority.HIGH;
-        //TODO If date field is empty, the app crashes
-        LocalDate date = Converters.LocalDatefromLong(1262165521l);
-        LocalTime time = LocalTime.parse("12:30");
-        //TODO: FOR NOW ALL TASKS ARE INSERTED IN LIST ID 1: CHANGE IT!!
-        Task task = new Task(title, descr, pri, date, time, 1);
-        //TODO Move this to a Repository
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            TodoDB.getTodoDB(app).taskDAO().insertTask(task);
-            /*handler.post(() -> {
-                //UI Thread work here
-            });*/
-        });
-    }
-
 
 
 }

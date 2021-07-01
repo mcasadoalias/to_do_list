@@ -19,16 +19,13 @@
         <argument
             android:name="addedTask"
             app:argType="boolean"
-            android:defaultValue="false" />
-        <!-- TODO: Change those two parameters for an WhatToShow object? -->
+            android:defaultValue="false"/>
+
         <argument
-            android:name="whatToShowType"
-            app:argType="es.iesnervion.mcasado.todolists.WhatToShowType"
-            android:defaultValue="ALL" />
-        <argument
-            android:name="catId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:name="whatToShow"
+            app:argType="es.iesnervion.mcasado.todolists.WhatToShow"
+            app:nullable="true"
+            android:defaultValue="@null"/>
 
     </fragment>
     <fragment
@@ -45,11 +42,9 @@
                 android:name="addedTask"
                 app:argType="boolean" />
             <argument
-                android:name="whatToShowType"
-                app:argType="es.iesnervion.mcasado.todolists.WhatToShowType" />
-            <argument
-                android:name="catId"
-                app:argType="integer" />
+                android:name="whatToShow"
+                app:argType="es.iesnervion.mcasado.todolists.WhatToShow" />
+
         </action>
     </fragment>
 </navigation>

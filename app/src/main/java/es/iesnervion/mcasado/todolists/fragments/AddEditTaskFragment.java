@@ -21,6 +21,7 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import es.iesnervion.mcasado.todolists.WhatToShow;
 import es.iesnervion.mcasado.todolists.WhatToShowType;
 import es.iesnervion.mcasado.todolists.viewmodels.AddEditTaskVM;
 import es.iesnervion.mcasado.todolists.DB.Priority;
@@ -199,7 +200,7 @@ public class AddEditTaskFragment extends Fragment{
             //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
             NavDirections action = AddEditTaskFragmentDirections
                     .actionAddEditTaskFragmentToTasksListFragment(false,
-                                                                    WhatToShowType.CAT,1);
+                            new WhatToShow(WhatToShowType.CAT, 2));
             Navigation.findNavController(view).navigate(action);
         });
 
@@ -215,8 +216,8 @@ public class AddEditTaskFragment extends Fragment{
 
                         //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
                         NavDirections action = AddEditTaskFragmentDirections
-                                .actionAddEditTaskFragmentToTasksListFragment(true,
-                                                                    WhatToShowType.CAT,1);
+                                .actionAddEditTaskFragmentToTasksListFragment(false,
+                                        new WhatToShow(WhatToShowType.CAT, 1));
                         Navigation.findNavController(view).navigate(action);
                     }
                });
