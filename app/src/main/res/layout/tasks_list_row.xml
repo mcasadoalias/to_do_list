@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
 
+    <!--TODO Put tint related attributes in styles/theme -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -28,11 +29,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cbTaskTitle" />
 
+        <!-- TODO: backgroundTint only works on API versions > 21
+                   Create layout-v21 folder -->
         <androidx.appcompat.widget.AppCompatToggleButton
             android:id="@+id/tgFav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/favorite_toggle_image"
+            android:backgroundTint="@color/design_default_color_secondary_variant"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txvDescrip" />
 
@@ -41,8 +51,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"
             app:drawableStartCompat="@drawable/baseline_access_alarm_24"
             app:drawableTint="@color/design_default_color_secondary_variant"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tgFav"
             app:layout_constraintTop_toBottomOf="@id/txvDescrip" />
 
@@ -51,8 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:drawableStartCompat="@drawable/baseline_today_black_24"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="8dp"
+            app:drawableStartCompat="@drawable/baseline_today_24"
             app:drawableTint="@color/design_default_color_secondary_variant"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/txvTime"
             app:layout_constraintTop_toBottomOf="@id/txvDescrip" />
 
