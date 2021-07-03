@@ -66,5 +66,8 @@ public class TasksListVM extends AndroidViewModel {
         return tasks;
     }
 
+    public void updateTask (Task task){
+        repo.updateTask(task);
+    }
 
 }

@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -21,5 +22,8 @@ public interface TaskDAO {
 
     @Query("SELECT * FROM task WHERE catId=:id")
     LiveData<List<Task>> getTasksByCat (int id);
+
+    @Update (onConflict = OnConflictStrategy.REPLACE)
+    void updateTask (Task task);
 
 }

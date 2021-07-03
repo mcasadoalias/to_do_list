@@ -95,7 +95,7 @@ public class TasksListFragment extends Fragment {
         recycler = v.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext(),
                                                         RecyclerView.VERTICAL,false));
-        TasksAdapter adapter = new TasksAdapter(viewModel.getTasks().getValue());
+        TasksAdapter adapter = new TasksAdapter(requireContext(), viewModel.getTasks().getValue());
         recycler.setAdapter(adapter);
 
         return v;
