@@ -5,9 +5,9 @@
             android:id="@+id/group1"
             android:checkableBehavior="single">
                 <item
-                    android:id="@+id/item1"
+                    android:id="@+id/allTasks"
                     android:icon="@drawable/baseline_today_black_48"
-                    android:title="PRUEBAAAAAAAAAAAA" />
+                    android:title="@string/all_tasks" />
                 <item
                     android:id="@+id/item2"
                     android:icon="@drawable/ic_baseline_local_airport_24"

@@ -47,4 +47,16 @@
 
         </action>
     </fragment>
+    <action
+        android:id="@+id/action_global_tasksListFragment"
+        app:destination="@id/tasksListFragment"
+        app:popUpTo="@id/tasksListFragment"
+        app:popUpToInclusive="true">
+            <argument
+                android:name="addedTask"
+                app:argType="boolean" />
+            <argument
+                android:name="whatToShow"
+                app:argType="es.iesnervion.mcasado.todolists.WhatToShow" />
+    </action>
 </navigation>

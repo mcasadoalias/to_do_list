@@ -1,6 +1,9 @@
 package es.iesnervion.mcasado.todolists.fragments;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
@@ -18,11 +21,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalTime;
 import java.util.Objects;
 
 import es.iesnervion.mcasado.todolists.WhatToShow;
 import es.iesnervion.mcasado.todolists.WhatToShowType;
+import es.iesnervion.mcasado.todolists.interfaces.TitleChanger;
 import es.iesnervion.mcasado.todolists.viewmodels.AddEditTaskVM;
 import es.iesnervion.mcasado.todolists.DB.Priority;
 import es.iesnervion.mcasado.todolists.R;
@@ -49,6 +56,11 @@ public class AddEditTaskFragment extends Fragment{
         viewModel = new ViewModelProvider(this) .get(AddEditTaskVM.class);
     }
 
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ((TitleChanger)requireActivity()).changeToolBarTitle(R.string.add_edit_fragment_title);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,16 +93,18 @@ public class AddEditTaskFragment extends Fragment{
             etxTitle.setText(viewModel.getTitle());
             etxDesc.setText(viewModel.getDescription());
             priority = viewModel.getPriority();
-            switch (priority){
-                case LOW:
-                    rgPriority.check(R.id.rbLow);
-                    break;
-                case HIGH:
-                    rgPriority.check(R.id.rbHigh);
-                    break;
-                case NORMAL:
-                    rgPriority.check(R.id.rbNormal);
-                    break;
+            if (priority!=null) {
+                switch (priority) {
+                    case LOW:
+                        rgPriority.check(R.id.rbLow);
+                        break;
+                    case HIGH:
+                        rgPriority.check(R.id.rbHigh);
+                        break;
+                    case NORMAL:
+                        rgPriority.check(R.id.rbNormal);
+                        break;
+                }
             }
             txtDueDate.setText(viewModel.getDueDateAsString());
             txtDueTime.setText(viewModel.getDueTime());

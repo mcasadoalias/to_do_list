@@ -36,7 +36,7 @@ public class TasksListVM extends AndroidViewModel {
     private final SavedStateHandle state;
     private final Application app;
     private final Repository repo;
-    private MutableLiveData<WhatToShow> whatToShowMutable;
+    private static final String WHATTOSHOW_KEY = "WhatToShowKey";
     private LiveData<List<Task>> tasks;
 
     public TasksListVM(@NonNull Application application, SavedStateHandle state) {
@@ -46,20 +46,16 @@ public class TasksListVM extends AndroidViewModel {
         //TODO repo could be injected (Dagger or Hilt)
         this.repo = new Repository(TodoDB.getTodoDB(app).categoryDAO(),
                                     TodoDB.getTodoDB(app).taskDAO());
-        this.whatToShowMutable = new MutableLiveData<>();
 
-        this.whatToShowMutable.setValue(new WhatToShow());
-        this.tasks = Transformations.switchMap(whatToShowMutable, param ->
-                repo.getTasksByWhatToShow (this.whatToShowMutable.getValue().getWhatToShowType(),
-                                           this.whatToShowMutable.getValue().getCatId()));
+        this.state.set(WHATTOSHOW_KEY,new WhatToShow());
+
+        this.tasks = Transformations.switchMap(this.state.getLiveData(WHATTOSHOW_KEY), param ->
+                               repo.getTasksByWhatToShow (((WhatToShow)param).getWhatToShowType(),
+                                                          ((WhatToShow)param).getCatId()));
     }
 
-    public MutableLiveData<WhatToShow> getWhatToShowMutable() {
-        return whatToShowMutable;
-    }
-
-    public void setWhatToShowMutable(WhatToShow whatToShow) {
-        this.whatToShowMutable.setValue(whatToShow);
+    public void saveWhatToShow (WhatToShow whatToShow){
+        this.state.set(WHATTOSHOW_KEY,whatToShow);
     }
 
     public LiveData<List<Task>> getTasks() {

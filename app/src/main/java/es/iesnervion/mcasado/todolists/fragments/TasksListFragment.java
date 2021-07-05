@@ -85,7 +85,7 @@ public class TasksListFragment extends Fragment {
                     case CAT:
                         catId = TasksListFragmentArgs.fromBundle(getArguments())
                                 .getWhatToShow().getCatId();
-                        viewModel.setWhatToShowMutable(new WhatToShow(WhatToShowType.CAT, catId));
+                        viewModel.saveWhatToShow(new WhatToShow(WhatToShowType.CAT, catId));
                         break;
                 }
             }

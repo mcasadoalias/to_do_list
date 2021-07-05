@@ -3,6 +3,8 @@ package es.iesnervion.mcasado.todolists.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
@@ -10,10 +12,15 @@ import android.os.Bundle;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
+import es.iesnervion.mcasado.todolists.NavGraphDirections;
 import es.iesnervion.mcasado.todolists.R;
+import es.iesnervion.mcasado.todolists.WhatToShow;
+import es.iesnervion.mcasado.todolists.WhatToShowType;
+import es.iesnervion.mcasado.todolists.fragments.AddEditTaskFragmentDirections;
+import es.iesnervion.mcasado.todolists.interfaces.TitleChanger;
 import es.iesnervion.mcasado.todolists.viewmodels.AddEditTaskVM;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TitleChanger {
 
     AddEditTaskVM viewModel;
     private DrawerLayout drawer;
@@ -39,10 +46,26 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> drawer.open());
         navigationView.setNavigationItemSelectedListener(item -> {
             item.setChecked(true);
+            switch (item.getItemId()){
+                case R.id.allTasks:
+                    //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
+                    NavDirections action = NavGraphDirections.actionGlobalTasksListFragment(
+                                    false, new WhatToShow(WhatToShowType.ALL,
+                                                                    WhatToShow.NO_CAT));
+                    navController.navigate(action);
+            }
+
+
             drawer.close();
             return true;
         });
 
+    }
+
+    @Override
+    public void changeToolBarTitle(int res) {
+        //TODO It fails on a configuration change: getSupportActionBar is null
+        getSupportActionBar().setTitle(getResources().getString(res));
     }
 
 }

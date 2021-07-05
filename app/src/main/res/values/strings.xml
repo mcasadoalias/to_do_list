@@ -23,6 +23,9 @@
     <string name="insertion_ok">Task created successfully</string>
     <string name="header_title">Header title</string>
     <string name="header_text">Header text</string>
+    <string name="all_tasks">All Tasks</string>
+    <string name="add_edit_fragment_title">Add or edit task</string>
+
 
 
 </resources>
