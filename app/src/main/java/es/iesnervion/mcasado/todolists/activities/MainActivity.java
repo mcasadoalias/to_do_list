@@ -46,16 +46,19 @@ public class MainActivity extends AppCompatActivity implements TitleChanger {
         toolbar.setNavigationOnClickListener(v -> drawer.open());
         navigationView.setNavigationItemSelectedListener(item -> {
             item.setChecked(true);
+            NavDirections action = null;
             switch (item.getItemId()){
                 case R.id.allTasks:
-                    //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
-                    NavDirections action = NavGraphDirections.actionGlobalTasksListFragment(
+                    action = NavGraphDirections.actionGlobalTasksListFragment(
                                     false, new WhatToShow(WhatToShowType.ALL,
                                                                     WhatToShow.NO_CAT));
-                    navController.navigate(action);
+                    break;
+                case R.id.create_category:
+                    action = NavGraphDirections.actionGlobalAddEditCategoryFragment();
+                    break;
             }
 
-
+            navController.navigate(action);
             drawer.close();
             return true;
         });
@@ -63,9 +66,8 @@ public class MainActivity extends AppCompatActivity implements TitleChanger {
     }
 
     @Override
-    public void changeToolBarTitle(int res) {
-        //TODO It fails on a configuration change: getSupportActionBar is null
-        getSupportActionBar().setTitle(getResources().getString(res));
+    public void changeToolBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
 }

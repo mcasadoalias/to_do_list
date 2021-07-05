@@ -58,6 +58,10 @@ public class TasksListVM extends AndroidViewModel {
         this.state.set(WHATTOSHOW_KEY,whatToShow);
     }
 
+    public WhatToShow getWhatToShow (){
+        return this.state.get(WHATTOSHOW_KEY);
+    }
+
     public LiveData<List<Task>> getTasks() {
         return tasks;
     }

@@ -47,6 +47,10 @@
 
         </action>
     </fragment>
+    <fragment
+        android:id="@+id/addEditCategoryFragment"
+        android:name="es.iesnervion.mcasado.todolists.fragments.AddEditCategoryFragment"
+        android:label="AddEditCategoryFragment" />
     <action
         android:id="@+id/action_global_tasksListFragment"
         app:destination="@id/tasksListFragment"
@@ -59,4 +63,8 @@
                 android:name="whatToShow"
                 app:argType="es.iesnervion.mcasado.todolists.WhatToShow" />
     </action>
+    <action
+        android:id="@+id/action_global_addEditCategoryFragment"
+        app:destination="@id/addEditCategoryFragment" />
+
 </navigation>

@@ -57,9 +57,11 @@ public class AddEditTaskFragment extends Fragment{
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view,
+                          @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((TitleChanger)requireActivity()).changeToolBarTitle(R.string.add_edit_fragment_title);
+        String title = getResources().getString(R.string.add_edit_task_fragment_title);
+        ((TitleChanger)requireActivity()).changeToolBarTitle(title);
     }
 
     @Override
@@ -211,11 +213,7 @@ public class AddEditTaskFragment extends Fragment{
         Button btnCancel;
         btnCancel = v.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(view -> {
-            //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
-            NavDirections action = AddEditTaskFragmentDirections
-                    .actionAddEditTaskFragmentToTasksListFragment(false,
-                            new WhatToShow(WhatToShowType.CAT, 2));
-            Navigation.findNavController(view).navigate(action);
+            requireActivity().onBackPressed();
         });
 
         //Save button

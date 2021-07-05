@@ -30,7 +30,6 @@ public class AddEditTaskVM extends AndroidViewModel {
     private static final String TASK_DESCRIPTION_KEY = "TaskDescriptionKey";
     private static final String TASK_PRIORITY_KEY = "TaskPriorityKey";
     ExecutorService executor = Executors.newSingleThreadExecutor();
-    //Handler handler = new Handler(Looper.getMainLooper());
     private final SavedStateHandle state;
     private final Application app;
 
@@ -39,8 +38,6 @@ public class AddEditTaskVM extends AndroidViewModel {
         this.state = state;
         this.app = application;
     }
-
-    //TODO: Change all the "get" for "getLiveData"?
 
     public void saveDueDate (Long date){
         state.set(DUE_DATE_KEY,date);

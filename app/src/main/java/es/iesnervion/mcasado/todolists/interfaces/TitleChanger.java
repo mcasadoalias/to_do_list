@@ -5,5 +5,5 @@ public interface TitleChanger {
      *
      * @param res: Id of a string resource
      */
-    public  void changeToolBarTitle (int res);
+    public  void changeToolBarTitle (String title);
 }

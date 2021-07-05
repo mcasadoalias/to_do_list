@@ -69,7 +69,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             Task task = tasks.get(position);
             //Checkbox (completed task)
             holder.getCbTitle().setText(task.getTitle());
-            holder.getCbTitle().setChecked(task.isCompleted());
             holder.getCbTitle().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -92,6 +91,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                     }
                 }
             });
+            holder.getCbTitle().setChecked(task.isCompleted());
 
             //Description
             holder.getTxvDescrip().setText(task.getDescription());

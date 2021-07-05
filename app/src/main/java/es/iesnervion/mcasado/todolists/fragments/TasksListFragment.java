@@ -2,6 +2,8 @@ package es.iesnervion.mcasado.todolists.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +20,8 @@ import android.widget.Button;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import es.iesnervion.mcasado.todolists.DB.Task;
@@ -25,6 +29,7 @@ import es.iesnervion.mcasado.todolists.R;
 import es.iesnervion.mcasado.todolists.WhatToShow;
 import es.iesnervion.mcasado.todolists.WhatToShowType;
 import es.iesnervion.mcasado.todolists.adapters.TasksAdapter;
+import es.iesnervion.mcasado.todolists.interfaces.TitleChanger;
 import es.iesnervion.mcasado.todolists.viewmodels.TasksListVM;
 
 /**
@@ -34,8 +39,6 @@ public class TasksListFragment extends Fragment {
 
     private RecyclerView recycler;
     private TasksListVM viewModel;
-    //TODO Put this field in the VM
-    private int catId;
 
     public TasksListFragment() {
         // Required empty public constructor
@@ -73,22 +76,12 @@ public class TasksListFragment extends Fragment {
 
             WhatToShow whatToShow = TasksListFragmentArgs.fromBundle(getArguments())
                                                                             .getWhatToShow();
-            if (whatToShow!=null) {
-                switch (whatToShow.getWhatToShowType()) {
-                    case ALL:
-                        break;
-                    case FAV:
-                        break;
-                    case HIGH:
-                    case LOW:
-                        break;
-                    case CAT:
-                        catId = TasksListFragmentArgs.fromBundle(getArguments())
-                                .getWhatToShow().getCatId();
-                        viewModel.saveWhatToShow(new WhatToShow(WhatToShowType.CAT, catId));
-                        break;
-                }
+            if (whatToShow==null){
+                viewModel.saveWhatToShow(new WhatToShow());
+            } else {
+                viewModel.saveWhatToShow(whatToShow);
             }
+
         }
 
 
@@ -99,5 +92,31 @@ public class TasksListFragment extends Fragment {
         recycler.setAdapter(adapter);
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view,
+                          @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        String title="";
+        WhatToShow whatToShow = viewModel.getWhatToShow();
+        switch (whatToShow.getWhatToShowType()){
+            case ALL:
+                title = getResources().getString(R.string.all_tasks);
+                break;
+            case FAV:
+                title = getResources().getString(R.string.fav_tasks);
+                break;
+            case HIGH:
+                title = getResources().getString(R.string.high_tasks);
+                break;
+            case LOW:
+                title = getResources().getString(R.string.low_tasks);
+                break;
+            case CAT:
+                //TODO: Get category title!
+                title = "Some category... ";
+        }
+        ((TitleChanger)requireActivity()).changeToolBarTitle(title);
     }
 }
