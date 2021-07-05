@@ -3,24 +3,31 @@ package es.iesnervion.mcasado.todolists.viewmodels;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.SavedStateHandle;
+import androidx.lifecycle.Transformations;
+
 import org.jetbrains.annotations.NotNull;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import es.iesnervion.mcasado.todolists.DB.Category;
+import es.iesnervion.mcasado.todolists.DB.Repository;
 import es.iesnervion.mcasado.todolists.DB.TodoDB;
+import es.iesnervion.mcasado.todolists.WhatToShow;
 
 public class AddEditCategoryVM extends AndroidViewModel {
     private static final String CATEGORY_TITLE_KEY = "CategoryTitleKey";
-    ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final Repository repo;
     private final SavedStateHandle state;
     private final Application app;
+    private LiveData<Long> idCat;
 
     public AddEditCategoryVM(@NonNull @NotNull Application application, SavedStateHandle state) {
         super(application);
         this.state = state;
         this.app = application;
-
+        //TODO repo could be injected (Dagger or Hilt)
+        this.repo = new Repository(TodoDB.getTodoDB(app).categoryDAO(),
+                                   TodoDB.getTodoDB(app).taskDAO());
+        this.idCat = this.repo.getIdCat();
     }
 
     public void saveTitle(String title) {
@@ -32,15 +39,11 @@ public class AddEditCategoryVM extends AndroidViewModel {
     }
 
     public void insertCategory() {
-        String title = getTitle();
+        Category category = new Category(getTitle());
+        repo.insertCategory(category);
+    }
 
-        Category category = new Category(title);
-        //TODO Move this to a Repository
-        executor.execute(() -> {
-            TodoDB.getTodoDB(app).categoryDAO().insertCategory(new Category(title));
-            /*handler.post(() -> {
-                //UI Thread work here
-            });*/
-        });
+    public LiveData<Long> getIdCat() {
+        return idCat;
     }
 }

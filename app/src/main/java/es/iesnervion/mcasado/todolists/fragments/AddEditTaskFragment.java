@@ -228,7 +228,7 @@ public class AddEditTaskFragment extends Fragment{
 
                         //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
                         NavDirections action = AddEditTaskFragmentDirections
-                                .actionAddEditTaskFragmentToTasksListFragment(false,
+                                .actionAddEditTaskFragmentToTasksListFragment(true,
                                         new WhatToShow(WhatToShowType.CAT, 1));
                         Navigation.findNavController(view).navigate(action);
                     }

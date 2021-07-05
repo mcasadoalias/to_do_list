@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -27,6 +28,7 @@ import es.iesnervion.mcasado.todolists.DB.Priority;
 import es.iesnervion.mcasado.todolists.R;
 import es.iesnervion.mcasado.todolists.WhatToShow;
 import es.iesnervion.mcasado.todolists.WhatToShowType;
+import es.iesnervion.mcasado.todolists.interfaces.MenuChanger;
 import es.iesnervion.mcasado.todolists.interfaces.TitleChanger;
 import es.iesnervion.mcasado.todolists.viewmodels.AddEditCategoryVM;
 import es.iesnervion.mcasado.todolists.viewmodels.AddEditTaskVM;
@@ -104,12 +106,12 @@ public class AddEditCategoryFragment extends Fragment {
                         displayErrors();
                     } else {
                         viewModel.insertCategory();
+                        viewModel.getIdCat().observe(getViewLifecycleOwner(), idCat -> {
 
-                        //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
-                        /*NavDirections action = AddEditTaskFragmentDirections
-                                .actionAddEditTaskFragmentToTasksListFragment(false,
-                                        new WhatToShow(WhatToShowType.CAT, 1));
-                        Navigation.findNavController(view).navigate(action);*/
+                            //TODO: Navigate to the fragment that shows the list of categories
+
+                        });
+
                     }
                 });
 

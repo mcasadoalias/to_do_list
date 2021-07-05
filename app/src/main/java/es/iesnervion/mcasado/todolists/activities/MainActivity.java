@@ -2,27 +2,35 @@ package es.iesnervion.mcasado.todolists.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.List;
+
+import es.iesnervion.mcasado.todolists.DB.Category;
 import es.iesnervion.mcasado.todolists.NavGraphDirections;
 import es.iesnervion.mcasado.todolists.R;
 import es.iesnervion.mcasado.todolists.WhatToShow;
 import es.iesnervion.mcasado.todolists.WhatToShowType;
 import es.iesnervion.mcasado.todolists.fragments.AddEditTaskFragmentDirections;
+import es.iesnervion.mcasado.todolists.interfaces.MenuChanger;
 import es.iesnervion.mcasado.todolists.interfaces.TitleChanger;
 import es.iesnervion.mcasado.todolists.viewmodels.AddEditTaskVM;
+import es.iesnervion.mcasado.todolists.viewmodels.MainViewModel;
 
-public class MainActivity extends AppCompatActivity implements TitleChanger {
+public class MainActivity extends AppCompatActivity implements TitleChanger, MenuChanger {
 
-    AddEditTaskVM viewModel;
+    MainViewModel viewModel;
     private DrawerLayout drawer;
     MaterialToolbar toolbar;
     NavigationView navigationView;
@@ -32,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements TitleChanger {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                                                         .findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
@@ -63,6 +71,18 @@ public class MainActivity extends AppCompatActivity implements TitleChanger {
             return true;
         });
 
+        //Read all categories from DB and create a menu item for each of them
+        this.viewModel.getAllCategories().observe(this, categories -> {
+
+            Menu menu = navigationView.getMenu();
+            menu.removeGroup(R.id.gr_categories);
+            int i=1;
+            for (Category cat : categories){
+                menu.add(R.id.gr_categories,cat.getId(),i, cat.getTitle());
+                i++;
+            }
+        });
+
     }
 
     @Override
@@ -70,4 +90,10 @@ public class MainActivity extends AppCompatActivity implements TitleChanger {
         getSupportActionBar().setTitle(title);
     }
 
+    //TODO Probably not needed anymore
+    @Override
+    public void addMenuItem(int groupId, int itemId, int order, String title) {
+
+        navigationView.getMenu().add(groupId,itemId,order,title);
+    }
 }

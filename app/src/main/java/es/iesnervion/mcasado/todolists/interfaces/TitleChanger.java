@@ -3,7 +3,7 @@ package es.iesnervion.mcasado.todolists.interfaces;
 public interface TitleChanger {
     /**
      *
-     * @param res: Id of a string resource
+     * @param title: title to put on the TopBar
      */
     public  void changeToolBarTitle (String title);
 }

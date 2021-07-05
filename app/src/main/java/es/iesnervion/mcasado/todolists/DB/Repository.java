@@ -16,7 +16,8 @@ public class Repository {
 
     private final CategoryDAO catDAO;
     private final TaskDAO taskDAO;
-    ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final LiveData<Long> idCatMut = new MutableLiveData<>();
 
     public Repository(CategoryDAO catDAO, TaskDAO taskDAO) {
         this.catDAO = catDAO;
@@ -58,4 +59,21 @@ public class Repository {
         });
     }
 
+    public LiveData<List<Category>> getAllCategories (){
+        return this.catDAO.getAllCategories();
+    }
+
+    public void insertCategory (Category category){
+        executor.execute(() -> {
+            long idCat = catDAO.insertCategory(category);
+            ((MutableLiveData<Long>)idCatMut).postValue(idCat);
+            /*handler.post(() -> {
+                //UI Thread work here
+            });*/
+        });
+    }
+
+    public LiveData<Long> getIdCat () {
+        return idCatMut;
+    }
 }
