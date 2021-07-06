@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements TitleChanger, Men
                             false, new WhatToShow(WhatToShowType.LOW,
                                     WhatToShow.NO_CAT));
                     break;
+                default:
+                    action = NavGraphDirections.actionGlobalTasksListFragment(false,
+                               new WhatToShow(WhatToShowType.CAT,item.getItemId()));
             }
 
             navController.navigate(action);
