@@ -26,4 +26,9 @@ public interface TaskDAO {
     @Update (onConflict = OnConflictStrategy.REPLACE)
     void updateTask (Task task);
 
+    @Query("SELECT * FROM task WHERE priority=:priority")
+    LiveData<List<Task>> getTasksByPriority(Priority priority);
+
+    @Query("SELECT * FROM task WHERE fav=:fav")
+    LiveData<List<Task>> getTasksByFav(boolean fav);
 }

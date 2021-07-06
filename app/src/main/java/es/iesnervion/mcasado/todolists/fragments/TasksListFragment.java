@@ -105,13 +105,13 @@ public class TasksListFragment extends Fragment {
                 title = getResources().getString(R.string.all_tasks);
                 break;
             case FAV:
-                title = getResources().getString(R.string.fav_tasks);
+                title = getResources().getString(R.string.favourite_tasks);
                 break;
             case HIGH:
-                title = getResources().getString(R.string.high_tasks);
+                title = getResources().getString(R.string.high_priority_tasks);
                 break;
             case LOW:
-                title = getResources().getString(R.string.low_tasks);
+                title = getResources().getString(R.string.low_priority_tasks);
                 break;
             case CAT:
                 //TODO: Get category title!

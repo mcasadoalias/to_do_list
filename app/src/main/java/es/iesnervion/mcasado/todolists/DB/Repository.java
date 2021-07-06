@@ -32,6 +32,18 @@ public class Repository {
         return taskDAO.getAllTasks();
     }
 
+    public LiveData<List<Task>> favTasks () {
+        return taskDAO.getTasksByFav(true);
+    }
+
+    public LiveData<List<Task>> highPriorityTasks() {
+        return taskDAO.getTasksByPriority(Priority.HIGH);
+    }
+
+    public LiveData<List<Task>> lowPriorityTasks() {
+        return taskDAO.getTasksByPriority(Priority.LOW);
+    }
+
     public LiveData<List<Task>> getTasksByWhatToShow(WhatToShowType whatToShowType, int catId) {
         LiveData<List<Task>> tasks = null;
         switch (whatToShowType) {
@@ -39,9 +51,13 @@ public class Repository {
                 tasks = allTasks();
                 break;
             case FAV:
+                tasks = favTasks();
                 break;
             case HIGH:
+                tasks = highPriorityTasks();
+                break;
             case LOW:
+                tasks = lowPriorityTasks();
                 break;
             case CAT:
                 tasks = tasksByCat(catId);
