@@ -32,6 +32,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_category">Create new category</string>
     <string name="add_edit_category_fragment_title">Add or Edit Category</string>
+    <string name="insertion_cat_ok">Category created successfully</string>
+    <string name="manage_categories">Manage categories</string>
+    <string name="favourite_tasks">Favourite Tasks</string>
+    <string name="high_priority_tasks">High Priority Tasks</string>
+    <string name="low_priority_tasks">Low Priority Tasks</string>
 
 
 </resources>

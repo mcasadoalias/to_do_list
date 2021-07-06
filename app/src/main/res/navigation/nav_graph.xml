@@ -48,6 +48,16 @@
         </action>
     </fragment>
     <fragment
+        android:id="@+id/categoriesListFragment"
+        android:name="es.iesnervion.mcasado.todolists.fragments.CategoriesListFragment"
+        android:label="fragment_categories_list"
+        tools:layout="@layout/fragment_categories_list">
+        <argument
+            android:name="addedCategory"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+    </fragment>
+    <fragment
         android:id="@+id/addEditCategoryFragment"
         android:name="es.iesnervion.mcasado.todolists.fragments.AddEditCategoryFragment"
         android:label="AddEditCategoryFragment" />
@@ -66,5 +76,12 @@
     <action
         android:id="@+id/action_global_addEditCategoryFragment"
         app:destination="@id/addEditCategoryFragment" />
+    <action
+        android:id="@+id/action_global_categoriesListFragment"
+        app:destination="@id/categoriesListFragment">
+        <argument
+            android:name="addedCategory"
+            app:argType="boolean" />
+    </action>
 
 </navigation>

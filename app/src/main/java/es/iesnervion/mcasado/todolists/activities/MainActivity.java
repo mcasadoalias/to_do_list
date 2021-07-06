@@ -56,13 +56,28 @@ public class MainActivity extends AppCompatActivity implements TitleChanger, Men
             item.setChecked(true);
             NavDirections action = null;
             switch (item.getItemId()){
+                case R.id.manage_categories:
+                    action = NavGraphDirections.actionGlobalCategoriesListFragment(false);
+                    break;
                 case R.id.allTasks:
                     action = NavGraphDirections.actionGlobalTasksListFragment(
                                     false, new WhatToShow(WhatToShowType.ALL,
                                                                     WhatToShow.NO_CAT));
                     break;
-                case R.id.create_category:
-                    action = NavGraphDirections.actionGlobalAddEditCategoryFragment();
+                case R.id.favTasks:
+                    action = NavGraphDirections.actionGlobalTasksListFragment(
+                            false, new WhatToShow(WhatToShowType.FAV,
+                                    WhatToShow.NO_CAT));
+                    break;
+                case R.id.highPriorityTasks:
+                    action = NavGraphDirections.actionGlobalTasksListFragment(
+                            false, new WhatToShow(WhatToShowType.HIGH,
+                                    WhatToShow.NO_CAT));
+                    break;
+                case R.id.lowPriorityTasks:
+                    action = NavGraphDirections.actionGlobalTasksListFragment(
+                            false, new WhatToShow(WhatToShowType.LOW,
+                                    WhatToShow.NO_CAT));
                     break;
             }
 

@@ -2,44 +2,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <group
-            android:id="@+id/gr_create_category"
+            android:id="@+id/gr_manage_category"
             android:checkableBehavior="single">
                 <item
-                    android:id="@+id/create_category"
-                    android:icon="@drawable/baseline_today_black_48"
-                    android:title="@string/create_category" />
+                    android:id="@+id/manage_categories"
+                    android:icon="@drawable/ic_baseline_settings_24"
+                    android:title="@string/manage_categories" />
         </group>
         <group
             android:id="@+id/gr_predefined_WhatToShow"
-            android:checkableBehavior="single">
+            android:checkableBehavior="none">
                 <item
                     android:id="@+id/allTasks"
-                    android:icon="@drawable/baseline_today_black_48"
+                    android:icon="@drawable/ic_baseline_done_all_24"
                     android:title="@string/all_tasks" />
                 <item
-                    android:id="@+id/item2"
-                    android:icon="@drawable/ic_baseline_local_airport_24"
-                    android:title="PRUEBA 2" />
+                    android:id="@+id/favTasks"
+                    android:icon="@drawable/ic_baseline_favorite_24"
+                    android:title="@string/favourite_tasks" />
                 <item
-                    android:id="@+id/item3"
-                    android:icon="@drawable/baseline_today_24"
-                    android:title="PRUEBA 3" />
+                    android:id="@+id/highPriorityTasks"
+                    android:icon="@drawable/ic_baseline_priority_high_24"
+                    android:title="@string/high_priority_tasks" />
+                <item
+                    android:id="@+id/lowPriorityTasks"
+                    android:icon="@drawable/ic_baseline_low_priority_24"
+                    android:title="@string/low_priority_tasks" />
         </group>
         <group
             android:id="@+id/gr_categories"
             android:checkableBehavior="single">
-                <item
-                    android:id="@+id/cat1"
-                    android:icon="@drawable/baseline_today_black_48"
-                    android:title="CATEGORY 1 DEFINED BY USER" />
-                <item
-                    android:id="@+id/cat2"
-                    android:icon="@drawable/ic_baseline_local_airport_24"
-                    app:showAsAction="always"
-                    android:title="CATEGORY 2 DEFINED BY USER" />
-                <item
-                    android:id="@+id/cat3"
-                    android:icon="@drawable/baseline_today_24"
-                    android:title="CATEGORY 3 DEFINED BY USER" />
+
         </group>
 </menu>
