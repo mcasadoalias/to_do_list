@@ -92,4 +92,8 @@ public class Repository {
     public LiveData<Long> getIdCat () {
         return idCatMut;
     }
+
+    public LiveData<String> getCategoryTitle(int catId) {
+        return catDAO.getCategoryTitle(catId);
+    }
 }

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
@@ -54,6 +55,9 @@ public class AddEditTaskFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this) .get(AddEditTaskVM.class);
+        if (getArguments()!=null) {
+            viewModel.saveCatId(AddEditTaskFragmentArgs.fromBundle(getArguments()).getCatId());
+        }
     }
 
     @Override
@@ -226,10 +230,9 @@ public class AddEditTaskFragment extends Fragment{
                         viewModel.insertTask();
                         //TODO Check if the task was actually inserted
 
-                        //TODO: WhatToShowType and category id hardcoded: CHANGE IT!
                         NavDirections action = AddEditTaskFragmentDirections
                                 .actionAddEditTaskFragmentToTasksListFragment(true,
-                                        new WhatToShow(WhatToShowType.CAT, 1));
+                                        new WhatToShow(WhatToShowType.CAT, viewModel.getCatId()));
                         Navigation.findNavController(view).navigate(action);
                     }
                });

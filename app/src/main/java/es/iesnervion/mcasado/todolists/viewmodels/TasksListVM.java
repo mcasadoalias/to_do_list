@@ -70,4 +70,6 @@ public class TasksListVM extends AndroidViewModel {
         repo.updateTask(task);
     }
 
+    public LiveData<String> getCategoryTitle (int catId) {return repo.getCategoryTitle(catId); }
+
 }

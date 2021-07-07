@@ -29,6 +29,7 @@ public class AddEditTaskVM extends AndroidViewModel {
     private static final String TASK_TITLE_KEY = "taskTitleKey";
     private static final String TASK_DESCRIPTION_KEY = "TaskDescriptionKey";
     private static final String TASK_PRIORITY_KEY = "TaskPriorityKey";
+    private static final String CAT_ID_KEY = "CatIdKey";
     ExecutorService executor = Executors.newSingleThreadExecutor();
     private final SavedStateHandle state;
     private final Application app;
@@ -69,8 +70,6 @@ public class AddEditTaskVM extends AndroidViewModel {
         return state.get(TASK_TITLE_KEY);
     }
 
-
-
     public void saveDescription(String description) {
         state.set(TASK_DESCRIPTION_KEY, description);
     }
@@ -87,12 +86,12 @@ public class AddEditTaskVM extends AndroidViewModel {
         return state.get(TASK_PRIORITY_KEY);
     }
 
-    public void clearTaskData() {
-        saveTitle("");
-        saveDescription("");
-        savePriority(Priority.UNDEFINED);
-        saveDueDate(null);
-        saveDueTime("");
+    public void saveCatId (int catId){
+        state.set(CAT_ID_KEY,catId);
+    }
+
+    public int getCatId (){
+        return state.get(CAT_ID_KEY);
     }
 
     public void insertTask() {
@@ -102,8 +101,8 @@ public class AddEditTaskVM extends AndroidViewModel {
         //TODO If date field is empty, the app crashes
         LocalDate date = Converters.LocalDatefromLong(getDueDate());
         LocalTime time = LocalTime.parse(getDueTime());
-        //TODO: FOR NOW ALL TASKS ARE INSERTED IN LIST ID 1: CHANGE IT!!
-        Task task = new Task(title, descr, pri , date, time, 1, false, false);
+        int catId = getCatId();
+        Task task = new Task(title, descr, pri , date, time, catId, false, false);
         //TODO Move this to a Repository
         executor.execute(() -> {
             TodoDB.getTodoDB(app).taskDAO().insertTask(task);

@@ -65,7 +65,8 @@ public class TasksListFragment extends Fragment {
         FloatingActionButton btnAddTask = v.findViewById(R.id.addTask);
         btnAddTask.setOnClickListener(view -> {
             NavDirections action = TasksListFragmentDirections
-                                    .actionTasksListFragmentToAddEditTaskFragment();
+                                    .actionTasksListFragmentToAddEditTaskFragment(
+                                                            viewModel.getWhatToShow().getCatId());
             Navigation.findNavController(view).navigate(action);
         });
         if (getArguments()!=null){
@@ -100,6 +101,7 @@ public class TasksListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         String title="";
         WhatToShow whatToShow = viewModel.getWhatToShow();
+        boolean observeTitle = false;
         switch (whatToShow.getWhatToShowType()){
             case ALL:
                 title = getResources().getString(R.string.all_tasks);
@@ -114,9 +116,16 @@ public class TasksListFragment extends Fragment {
                 title = getResources().getString(R.string.low_priority_tasks);
                 break;
             case CAT:
-                //TODO: Get category title!
-                title = "Some category... ";
+                title = "";
+                observeTitle=true;
+                break;
         }
         ((TitleChanger)requireActivity()).changeToolBarTitle(title);
+        if (observeTitle) {
+            viewModel.getCategoryTitle(viewModel.getWhatToShow().getCatId()).observe(
+                    getViewLifecycleOwner(), newTitle ->
+                            ((TitleChanger) requireActivity()).changeToolBarTitle(newTitle)
+            );
+        }
     }
 }
